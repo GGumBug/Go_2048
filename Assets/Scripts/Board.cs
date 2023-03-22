@@ -47,13 +47,13 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
-        //ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Äµï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        // ï¿½ï¿½ï¿½ï¿½ï¿½å¸¦ï¿½Ï¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+        //±×¸®µå ·¹ÀÌ¾Æ¿ô¿¡ ÀÇÇØ Á¤·ÄµÈ UI´Â ½ÇÁ¦À§Ä¡¿Í ´Ù¸£°Ô ·¹ÀÌ¶ó¿ô¿¡ ÀÇÇØ ÅëÁ¦µÇ°íÀÖ±â ¶§¹®¿¡
+        // ¸®ºôµå¸¦ÇÏ¿© À§Ä¡¸¦ °»½ÅÇØÁà¾ß ÇÑ´Ù.
         UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(nodeSpawner.GetComponent<RectTransform>());
 
         foreach (Node node in NodeList)
         {
-            // Vector2 ï¿½ï¿½ï¿½ï¿½ localPositionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+            // Vector2 º¯¼ö localPosition¿¡ ¸®ºôµå µÈ À§Ä¡°ªÀ» ÀúÀåÇØÁØ´Ù.
             node.localPosition = node.GetComponent<RectTransform>().localPosition;
         }
 
@@ -80,16 +80,16 @@ public class Board : MonoBehaviour
 
     private void SpawnBlockToRandomNode()
     {
-        //NodeListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ placedBlockï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ emptyNodesï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½. ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Node
+        //NodeListÀÇ ³ëµåÁß placedBlockÀÌ nullÀÎ ³ëµå¸¦ ¸ðµÎ emptyNodes¿¡ ³Ö¾îÁØ´Ù. Áï ¹èÄ¡µÇÁö ¾ÊÀº Node
         List<Node> emptyNodes = NodeList.FindAll(x => x.placedBlock == null);
 
-        // emptyNodesï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // emptyNodes°¡ ÀÖÀ»¶§
         if (emptyNodes.Count != 0)
         {
-            // emptyNodesï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ nodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½
+            // emptyNodesÁß ·£´ýÇÑ nodeÀÇ Á¤º¸¸¦ °¡Á®¿Í¼­
             int         index = Random.Range(0, emptyNodes.Count);
             Vector2Int  point = emptyNodes[index].Point;
-            // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // ÇØ´ç ³ëµå À§Ä¡¿¡ ºí·Ï »ý¼º
             SpawnBlock(point.x, point.y);
         }
         else
@@ -103,7 +103,7 @@ public class Board : MonoBehaviour
 
     private void SpawnBlock(int x, int y)
     {
-        // y*BlockCount.x+x ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ indexï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½
+        // y*BlockCount.x+x ºí·ÏÀÇ index¸¦ Ã£´Â ½Ä
         if (NodeList[y * BlockCount.x + x].placedBlock != null) return;
 
         GameObject  clone   = Instantiate(blockPrefab, blockRect);
@@ -235,8 +235,8 @@ public class Board : MonoBehaviour
 
         if (targetAllNull && state == State.Processing)
         {
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            // ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
+            // ¾÷µ¥ÀÌÆ®¿¡¼­ ¿øº» ¸®½ºÆ®¸¦ ¼öÁ¤ÇÒ°æ¿ì »ç¿ëÁßÀÎ °÷¿¡¼­ °¢±â ´Ù¸¥ °á°ú°ªÀÌ Ãâ·Â µÉ ¼ö ÀÖ±â ¶§¹®¿¡
+            // µ¥ÀÌÅÍ¸¦ ÀÌµ¿ÇØ ³õ°í Áö¿ì´Â °ÍÀÌ ¾ÈÀüÇÏ´Ù.
             List<Block> removeBlocks = new List<Block>();
             foreach (Block block in blockList)
             {
@@ -297,13 +297,11 @@ public class Board : MonoBehaviour
 
     private void OnGameOver()
     {
-        //Debug.Log("GameOver");
+        Debug.Log("GameOver");
 
         if (currentScore > highScore)
         {
             PlayerPrefs.SetInt("HighScore", currentScore);
         }
-
-        uIController.OnGameOver();
     }
 }
